@@ -1,0 +1,1402 @@
+<!doctype html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Biblioteca — Arquitetura & Engenharia de Software</title>
+        <meta
+            name="description"
+            content="Catálogo de referência: 14 obras essenciais de arquitetura e engenharia de software para o profissional sênior."
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,500&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=JetBrains+Mono:wght@400;500;600&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            :root {
+                /* ── Light · papel envelhecido ── */
+                --paper: #f0e9da;
+                --paper-2: #e9e0cd;
+                --card: #f7f2e7;
+                --ink: #211d16;
+                --ink-soft: #3d3528;
+                --ink-faint: #7a6f5c;
+                --accent: #8c2f1f; /* oxblood */
+                --accent-2: #b4502f; /* terracotta */
+                --gold: #9a7b32;
+                --rule: rgba(33, 29, 22, 0.16);
+                --rule-soft: rgba(33, 29, 22, 0.09);
+                --shadow: rgba(40, 28, 14, 0.22);
+                --grain-opacity: 0.05;
+            }
+
+            @media (prefers-color-scheme: dark) {
+                :root {
+                    --paper: #16130d;
+                    --paper-2: #1d180f;
+                    --card: #211b12;
+                    --ink: #ece3cf;
+                    --ink-soft: #cec3a8;
+                    --ink-faint: #9a8d73;
+                    --accent: #d96b4a;
+                    --accent-2: #e6895f;
+                    --gold: #cfa653;
+                    --rule: rgba(236, 227, 207, 0.16);
+                    --rule-soft: rgba(236, 227, 207, 0.08);
+                    --shadow: rgba(0, 0, 0, 0.55);
+                    --grain-opacity: 0.07;
+                }
+            }
+
+            html {
+                scroll-behavior: smooth;
+            }
+
+            body {
+                font-family: "Newsreader", Georgia, serif;
+                font-weight: 400;
+                background-color: var(--paper);
+                background-image:
+                    radial-gradient(
+                        120% 80% at 50% -10%,
+                        var(--paper-2) 0%,
+                        transparent 60%
+                    ),
+                    radial-gradient(
+                        90% 60% at 100% 100%,
+                        rgba(140, 47, 31, 0.07) 0%,
+                        transparent 55%
+                    );
+                background-attachment: fixed;
+                color: var(--ink);
+                line-height: 1.6;
+                padding: clamp(2rem, 6vw, 5rem) 1.5rem 6rem;
+                -webkit-font-smoothing: antialiased;
+                text-rendering: optimizeLegibility;
+                position: relative;
+                overflow-x: hidden;
+            }
+
+            /* ── Grão de papel ── */
+            body::before {
+                content: "";
+                position: fixed;
+                inset: 0;
+                z-index: 9999;
+                pointer-events: none;
+                opacity: var(--grain-opacity);
+                mix-blend-mode: multiply;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            }
+            @media (prefers-color-scheme: dark) {
+                body::before {
+                    mix-blend-mode: screen;
+                }
+            }
+
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+                position: relative;
+            }
+
+            /* ───────── Header ───────── */
+            .lib-header {
+                text-align: center;
+                margin-bottom: clamp(3rem, 7vw, 5rem);
+                position: relative;
+            }
+
+            .lib-eyebrow {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 11px;
+                font-weight: 500;
+                letter-spacing: 0.34em;
+                text-transform: uppercase;
+                color: var(--accent);
+                margin-bottom: 1.6rem;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.85em;
+            }
+            .lib-eyebrow::before,
+            .lib-eyebrow::after {
+                content: "";
+                width: 26px;
+                height: 1px;
+                background: var(--accent);
+                opacity: 0.6;
+            }
+
+            .lib-title {
+                font-family: "Fraunces", serif;
+                font-optical-sizing: auto;
+                font-weight: 600;
+                font-size: clamp(2.6rem, 8.5vw, 4.7rem);
+                line-height: 0.98;
+                letter-spacing: -0.018em;
+                color: var(--ink);
+                margin-bottom: 1.4rem;
+            }
+            .lib-title em {
+                font-style: italic;
+                font-weight: 500;
+                color: var(--accent);
+            }
+
+            .lib-subtitle {
+                font-size: clamp(1.05rem, 2.4vw, 1.3rem);
+                font-weight: 300;
+                font-style: italic;
+                color: var(--ink-soft);
+                max-width: 30ch;
+                margin: 0 auto 2.2rem;
+                line-height: 1.5;
+            }
+
+            .lib-stats {
+                display: inline-flex;
+                align-items: stretch;
+                gap: 0;
+                font-family: "JetBrains Mono", monospace;
+                border: 1px solid var(--rule);
+                border-radius: 2px;
+                overflow: hidden;
+                background: rgba(255, 255, 255, 0.04);
+            }
+            .lib-stat {
+                padding: 0.7rem 1.3rem;
+                display: flex;
+                flex-direction: column;
+                gap: 3px;
+                position: relative;
+            }
+            .lib-stat + .lib-stat {
+                border-left: 1px solid var(--rule);
+            }
+            .lib-stat b {
+                font-size: 1.15rem;
+                font-weight: 600;
+                color: var(--ink);
+                line-height: 1;
+            }
+            .lib-stat span {
+                font-size: 9.5px;
+                letter-spacing: 0.16em;
+                text-transform: uppercase;
+                color: var(--ink-faint);
+            }
+
+            /* ───────── Section divider ───────── */
+            .lib-section {
+                margin-top: clamp(3rem, 6vw, 4.5rem);
+            }
+
+            .section-head {
+                display: flex;
+                align-items: baseline;
+                gap: 1rem;
+                padding-bottom: 1.1rem;
+                margin-bottom: 2rem;
+                border-bottom: 1px solid var(--rule);
+            }
+            .section-idx {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 12px;
+                font-weight: 600;
+                color: var(--accent);
+                letter-spacing: 0.05em;
+            }
+            .section-label {
+                font-family: "Fraunces", serif;
+                font-weight: 600;
+                font-size: clamp(1.25rem, 3vw, 1.65rem);
+                letter-spacing: -0.01em;
+                color: var(--ink);
+                flex: 1;
+            }
+            .section-count {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 11px;
+                color: var(--ink-faint);
+                letter-spacing: 0.08em;
+                white-space: nowrap;
+            }
+
+            /* ───────── Book card ───────── */
+            .book-card {
+                display: grid;
+                grid-template-columns: 132px 1fr;
+                gap: 1.8rem;
+                padding: 1.6rem 1.6rem 1.6rem 1.6rem;
+                margin-bottom: 1rem;
+                border-radius: 3px;
+                border: 1px solid var(--rule-soft);
+                background: var(--card);
+                position: relative;
+                transition:
+                    transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+                    border-color 0.3s ease,
+                    box-shadow 0.4s ease;
+
+                /* reveal */
+                opacity: 0;
+                transform: translateY(22px);
+            }
+            .book-card.in {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            .book-card:hover {
+                border-color: var(--rule);
+                box-shadow: 0 18px 40px -28px var(--shadow);
+            }
+            /* hairline accent on the left, drawn on hover */
+            .book-card::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 14%;
+                bottom: 14%;
+                width: 2px;
+                background: var(--accent);
+                border-radius: 2px;
+                transform: scaleY(0);
+                transform-origin: center;
+                transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            }
+            .book-card:hover::before {
+                transform: scaleY(1);
+            }
+
+            /* ── Cover · lombada de livro ── */
+            .book-cover {
+                position: relative;
+                width: 132px;
+                align-self: start;
+                aspect-ratio: 2 / 3;
+                perspective: 900px;
+            }
+            .book-cover-inner {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                border-radius: 2px 5px 5px 2px;
+                overflow: hidden;
+                background: var(--paper-2);
+                box-shadow:
+                    0 1px 1px rgba(0, 0, 0, 0.12),
+                    0 12px 24px -14px var(--shadow);
+                transition:
+                    transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+                    box-shadow 0.5s ease;
+            }
+            .book-card:hover .book-cover-inner {
+                transform: rotateY(-9deg) translateZ(8px) scale(1.02);
+                box-shadow:
+                    0 2px 2px rgba(0, 0, 0, 0.16),
+                    0 26px 40px -18px var(--shadow);
+            }
+            .book-cover img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center top;
+                display: block;
+            }
+            /* page edge sheen — direita apenas */
+            .book-cover-inner::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                pointer-events: none;
+                background: linear-gradient(
+                    95deg,
+                    rgba(255, 255, 255, 0.08) 0%,
+                    rgba(255, 255, 255, 0) 18%,
+                    rgba(0, 0, 0, 0) 82%,
+                    rgba(0, 0, 0, 0.1) 100%
+                );
+                border-radius: inherit;
+            }
+            /* lombada — sombra muito sutil, não cobre conteúdo */
+            .book-cover-inner::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 8px;
+                background: linear-gradient(
+                    90deg,
+                    rgba(0, 0, 0, 0.1),
+                    transparent
+                );
+                z-index: 2;
+            }
+            /* fallback when image missing */
+            .book-cover.no-img .book-cover-inner {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 12px;
+            }
+            .book-cover.no-img img {
+                display: none;
+            }
+            .book-cover .fallback {
+                display: none;
+                font-family: "Fraunces", serif;
+                font-weight: 600;
+                font-size: 13px;
+                line-height: 1.3;
+                text-align: center;
+                color: var(--ink-soft);
+            }
+            .book-cover.no-img .fallback {
+                display: block;
+            }
+
+            /* ── Body ── */
+            .book-body {
+                display: flex;
+                flex-direction: column;
+                padding-top: 0.15rem;
+            }
+            .book-num {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 10.5px;
+                font-weight: 500;
+                letter-spacing: 0.18em;
+                color: var(--ink-faint);
+                margin-bottom: 0.5rem;
+            }
+            .book-num b {
+                color: var(--accent);
+                font-weight: 600;
+            }
+            .book-title {
+                font-family: "Fraunces", serif;
+                font-optical-sizing: auto;
+                font-weight: 600;
+                font-size: 1.32rem;
+                line-height: 1.18;
+                letter-spacing: -0.012em;
+                color: var(--ink);
+                margin-bottom: 0.3rem;
+            }
+            .book-author {
+                font-size: 0.93rem;
+                font-style: italic;
+                font-weight: 300;
+                color: var(--accent-2);
+                margin-bottom: 0.8rem;
+            }
+            .book-desc {
+                font-size: 0.97rem;
+                color: var(--ink-soft);
+                line-height: 1.62;
+                font-weight: 400;
+            }
+            .book-footer {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-top: 1.15rem;
+                padding-top: 0.9rem;
+                border-top: 1px dotted var(--rule);
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .book-tag {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 10px;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                font-weight: 500;
+                padding: 4px 10px;
+                border-radius: 2px;
+                color: var(--ink-soft);
+                background: var(--paper-2);
+                border: 1px solid var(--rule-soft);
+            }
+            .book-link {
+                display: inline-flex;
+                align-items: center;
+                gap: 7px;
+                font-family: "JetBrains Mono", monospace;
+                font-size: 11px;
+                font-weight: 500;
+                letter-spacing: 0.06em;
+                text-transform: uppercase;
+                color: var(--accent);
+                text-decoration: none;
+                padding: 5px 4px 5px 0;
+                position: relative;
+            }
+            .book-link::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                bottom: 2px;
+                width: 100%;
+                height: 1px;
+                background: var(--accent);
+                transform: scaleX(0);
+                transform-origin: left;
+                transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            }
+            .book-link:hover::after {
+                transform: scaleX(1);
+            }
+            .book-link svg {
+                width: 13px;
+                height: 13px;
+                stroke: currentColor;
+                fill: none;
+                stroke-width: 2;
+                stroke-linecap: round;
+                stroke-linejoin: round;
+                transition: transform 0.3s ease;
+            }
+            .book-link:hover svg {
+                transform: translate(2px, -2px);
+            }
+
+            /* ───────── Section quote ───────── */
+            .section-quote {
+                margin-top: 1.8rem;
+                padding: 1.2rem 1.5rem;
+                border-left: 2px solid var(--accent);
+                background: transparent;
+            }
+            .section-quote p {
+                font-family: "Newsreader", serif;
+                font-size: 0.97rem;
+                font-style: italic;
+                font-weight: 400;
+                color: var(--ink-soft);
+                line-height: 1.6;
+                margin-bottom: 0.55rem;
+            }
+            .section-quote cite {
+                display: block;
+                font-family: "JetBrains Mono", monospace;
+                font-size: 10px;
+                font-style: normal;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: var(--ink-faint);
+            }
+            .section-quote cite em {
+                font-style: italic;
+                text-transform: none;
+                letter-spacing: 0;
+            }
+
+            /* ───────── Footer ───────── */
+            .lib-footer {
+                text-align: center;
+                margin-top: clamp(3.5rem, 7vw, 5.5rem);
+                padding-top: 2rem;
+                border-top: 1px solid var(--rule);
+            }
+            .lib-footer .mark {
+                font-family: "Fraunces", serif;
+                font-style: italic;
+                font-weight: 500;
+                font-size: 1.4rem;
+                color: var(--accent);
+                margin-bottom: 1.4rem;
+            }
+            .lib-quote {
+                max-width: 44ch;
+                margin: 0 auto;
+            }
+            .lib-quote p {
+                font-family: "Newsreader", serif;
+                font-size: 1.05rem;
+                font-weight: 400;
+                font-style: italic;
+                color: var(--ink-soft);
+                line-height: 1.65;
+                margin-bottom: 0.85rem;
+            }
+            .lib-quote cite {
+                display: block;
+                font-family: "JetBrains Mono", monospace;
+                font-size: 10.5px;
+                font-style: normal;
+                letter-spacing: 0.06em;
+                color: var(--ink-faint);
+                line-height: 1.6;
+            }
+            .lib-quote cite em {
+                font-style: italic;
+            }
+
+            /* ───────── Responsive ───────── */
+            @media (max-width: 560px) {
+                .book-card {
+                    grid-template-columns: 90px 1fr;
+                    gap: 1.2rem;
+                    padding: 1.2rem;
+                }
+                .book-cover {
+                    width: 90px;
+                }
+                .book-title {
+                    font-size: 1.18rem;
+                }
+                .book-desc {
+                    font-size: 0.92rem;
+                }
+                .lib-stat {
+                    padding: 0.6rem 0.9rem;
+                }
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                * {
+                    animation: none !important;
+                    transition: none !important;
+                }
+                .book-card {
+                    opacity: 1;
+                    transform: none;
+                }
+                html {
+                    scroll-behavior: auto;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <header class="lib-header">
+                <p class="lib-eyebrow">Catálogo de Referência</p>
+                <h1 class="lib-title">
+                    Arquitetura &amp;<br />Engenharia de <em>Software</em>
+                </h1>
+                <p class="lib-subtitle">
+                    Quatorze obras essenciais para o profissional sênior — do
+                    craft ao desenho de sistemas distribuídos.
+                </p>
+                <div class="lib-stats">
+                    <div class="lib-stat">
+                        <b>14</b><span>Obras</span>
+                    </div>
+                    <div class="lib-stat">
+                        <b>05</b><span>Seções</span>
+                    </div>
+                    <div class="lib-stat">
+                        <b>∞</b><span>Releituras</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- ── 01 · CRAFT & BOAS PRÁTICAS ── -->
+            <section class="lib-section">
+                <div class="section-head">
+                    <span class="section-idx">I</span>
+                    <h2 class="section-label">Craft &amp; boas práticas</h2>
+                    <span class="section-count">04 títulos</span>
+                </div>
+
+                <article class="book-card">
+                    <div class="book-cover">
+                        <div class="book-cover-inner">
+                            <img
+                                src="clean-code.jpg"
+                                alt="Capa de Clean Code"
+                                loading="lazy"
+                                decoding="async"
+                            />
+                            <span class="fallback">Clean Code</span>
+                        </div>
+                    </div>
+                    <div class="book-body">
+                        <p class="book-num">Nº <b>01</b></p>
+                        <h3 class="book-title">Clean Code</h3>
+                        <p class="book-author">Robert C. Martin</p>
+                        <p class="book-desc">
+                            O manifesto do código limpo. Martin destila décadas
+                            de experiência em princípios acionáveis —
+                            nomenclatura, funções pequenas, ausência de
+                            duplicação e testes como cidadãos de primeira classe.
+                            Leitura obrigatória antes de qualquer code review.
+                        </p>
+                        <div class="book-footer">
+                            <span class="book-tag">Legibilidade</span>
+                            <a
+                                class="book-link"
+                                href="https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882"
+                                target="_blank"
+                                rel="noopener"
+                            >
+                                <svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                                    />
+                                    <polyline points="15 3 21 3 21 9" />
+                                    <line x1="10" y1="14" x2="21" y2="3" />
+                                </svg>
+                                Amazon
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="book-card">
+                    <div class="book-cover">
+                        <div class="book-cover-inner">
+                            <img
+                                src="clean-architecture.jpg"
+                                alt="Capa de Clean Architecture"
+                                loading="lazy"
+                                decoding="async"
+                            />
+                            <span class="fallback">Clean Architecture</span>
+                        </div>
+                    </div>
+                    <div class="book-body">
+                        <p class="book-num">Nº <b>02</b></p>
+                        <h3 class="book-title">Clean Architecture</h3>
+                        <p class="book-author">Robert C. Martin</p>
+                        <p class="book-desc">
+                            Eleva o craft para o nível estrutural. Martin propõe
+                            fronteiras explícitas entre camadas, a Regra da
+                            Dependência e a separação entre política e detalhe —
+                            base conceitual para qualquer debate sério sobre
+                            arquitetura hexagonal ou ports &amp; adapters.
+                        </p>
+                        <div class="book-footer">
+                            <span class="book-tag">Camadas</span>
+                            <a
+                                class="book-link"
+                                href="https://www.amazon.com/Clean-Architecture-Craftsmans-Software-Structure/dp/0134494164"
+                                target="_blank"
+                                rel="noopener"
+                            >
+                                <svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                                    />
+                                    <polyline points="15 3 21 3 21 9" />
+                                    <line x1="10" y1="14" x2="21" y2="3" />
+                                </svg>
+                                Amazon
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="book-card">
+                    <div class="book-cover">
+                        <div class="book-cover-inner">
+                            <img
+                                src="o-programador-pragmatico.jpg"
+                                alt="Capa de O Programador Pragmático"
+                                loading="lazy"
+                                decoding="async"
+                            />
+                            <span class="fallback">O Programador Pragmático</span>
+                        </div>
+                    </div>
+                    <div class="book-body">
+                        <p class="book-num">Nº <b>09</b></p>
+                        <h3 class="book-title">O Programador Pragmático</h3>
+                        <p class="book-author">Andrew Hunt &amp; David Thomas</p>
+                        <p class="book-desc">
+                            Clássico atemporal sobre postura profissional no
+                            desenvolvimento. Temas como DRY, ortogonalidade,
+                            tracer bullets e debugging metódico formam um
+                            vocabulário compartilhado entre times de alto
+                            desempenho. Atualizado em 2019 com novo material.
+                        </p>
+                        <div class="book-footer">
+                            <span class="book-tag">Mentalidade</span>
+                            <a
+                                class="book-link"
+                                href="https://www.amazon.com/Pragmatic-Programmer-journey-mastery-Anniversary/dp/0135957052"
+                                target="_blank"
+                                rel="noopener"
+                            >
+                                <svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                                    />
+                                    <polyline points="15 3 21 3 21 9" />
+                                    <line x1="10" y1="14" x2="21" y2="3" />
+                                </svg>
+                                Amazon
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="book-card">
+                    <div class="book-cover">
+                        <div class="book-cover-inner">
+                            <img
+                                src="refactoring.jpg"
+                                alt="Capa de Refatoração"
+                                loading="lazy"
+                                decoding="async"
+                            />
+                            <span class="fallback">Refatoração</span>
+                        </div>
+                    </div>
+                    <div class="book-body">
+                        <p class="book-num">Nº <b>10</b></p>
+                        <h3 class="book-title">Refatoração</h3>
+                        <p class="book-author">Martin Fowler</p>
+                        <p class="book-desc">
+                            O catálogo definitivo de transformações de código
+                            seguras. Fowler nomeia e sistematiza dezenas de
+                            refactorings — Extract Method, Replace Conditional
+                            with Polymorphism, Introduce Parameter Object —
+                            provendo uma linguagem precisa para discussões de
+                            design incremental.
+                        </p>
+                        <div class="book-footer">
+                            <span class="book-tag">Design incremental</span>
+                            <a
+                                class="book-link"
+                                href="https://www.amazon.com/Refactoring-Improving-Existing-Addison-Wesley-Signature/dp/0134757599"
+                                target="_blank"
+                                rel="noopener"
+                            >
+                                <svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                                    />
+                                    <polyline points="15 3 21 3 21 9" />
+                                    <line x1="10" y1="14" x2="21" y2="3" />
+                                </svg>
+                                Amazon
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <blockquote class="section-quote">
+                    <p>"A única forma de ir rápido é ir bem."</p>
+                    <cite>— Robert C. Martin · <em>Clean Code</em></cite>
+                </blockquote>
+            </section>
+
+            <!-- ── 02 · DOMAIN-DRIVEN DESIGN ── -->
+            <section class="lib-section">
+                <div class="section-head">
+                    <span class="section-idx">II</span>
+                    <h2 class="section-label">Domain-Driven Design</h2>
+                    <span class="section-count">03 títulos</span>
+                </div>
+
+                <article class="book-card">
+                    <div class="book-cover">
+                        <div class="book-cover-inner">
+                            <img
+                                src="ddd.jpg"
+                                alt="Capa de Domain-Driven Design"
+                                loading="lazy"
+                                decoding="async"
+                            />
+                            <span class="fallback">Domain-Driven Design</span>
+                        </div>
+                    </div>
+                    <div class="book-body">
+                        <p class="book-num">Nº <b>03</b></p>
+                        <h3 class="book-title">Domain-Driven Design</h3>
+                        <p class="book-author">Eric Evans</p>
+                        <p class="book-desc">
+                            O “livro azul” que definiu o campo. Evans introduz
+                            Ubiquitous Language, Bounded Contexts, Aggregates,
+                            Repositories e Anti-Corruption Layer — conceitos que
+                            se tornaram o vocabulário padrão para modelagem de
+                            domínios complexos em sistemas de longa vida.
+                        </p>
+                        <div class="book-footer">
+                            <span class="book-tag">Estratégico</span>
+                            <a
+                                class="book-link"
+                                href="https://www.amazon.com/Domain-Driven-Design-Tackling-Complexity-Software/dp/0321125215"
+                                target="_blank"
+                                rel="noopener"
+                            >
+                                <svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                                    />
+                                    <polyline points="15 3 21 3 21 9" />
+                                    <line x1="10" y1="14" x2="21" y2="3" />
+                                </svg>
+                                Amazon
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="book-card">
+                    <div class="book-cover">
+                        <div class="book-cover-inner">
+                            <img
+                                src="implementing-ddd.jpg"
+                                alt="Capa de Implementing Domain-Driven Design"
+                                loading="lazy"
+                                decoding="async"
+                            />
+                            <span class="fallback"
+                                >Implementing Domain-Driven Design</span
+                            >
+                        </div>
+                    </div>
+                    <div class="book-body">
+                        <p class="book-num">Nº <b>04</b></p>
+                        <h3 class="book-title">
+                            Implementing Domain-Driven Design
+                        </h3>
+                        <p class="book-author">Vaughn Vernon</p>
+                        <p class="book-desc">
+                            O “livro vermelho” que traduz a teoria de Evans em
+                            código. Vernon preenche lacunas práticas com exemplos
+                            detalhados de Aggregates, Domain Events, CQRS e Event
+                            Sourcing — leitura complementar indispensável para
+                            quem implementa DDD no dia a dia.
+                        </p>
+                        <div class="book-footer">
+                            <span class="book-tag">Tático</span>
+                            <a
+                                class="book-link"
+                                href="https://www.amazon.com/Implementing-Domain-Driven-Design-Vaughn-Vernon/dp/0321834577"
+                                target="_blank"
+                                rel="noopener"
+                            >
+                                <svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                                    />
+                                    <polyline points="15 3 21 3 21 9" />
+                                    <line x1="10" y1="14" x2="21" y2="3" />
+                                </svg>
+                                Amazon
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="book-card">
+                    <div class="book-cover">
+                        <div class="book-cover-inner">
+                            <img
+                                src="learning-domain-driven-design.jpg"
+                                alt="Capa de Aprenda Domain-Driven Design"
+                                loading="lazy"
+                                decoding="async"
+                            />
+                            <span class="fallback"
+                                >Aprenda Domain-Driven Design</span
+                            >
+                        </div>
+                    </div>
+                    <div class="book-body">
+                        <p class="book-num">Nº <b>05</b></p>
+                        <h3 class="book-title">Aprenda Domain-Driven Design</h3>
+                        <p class="book-author">Vlad Khononov</p>
+                        <p class="book-desc">
+                            A abordagem mais acessível e atualizada ao DDD.
+                            Khononov conecta os padrões táticos e estratégicos
+                            com o contexto de negócio, introduzindo o conceito de
+                            alinhamento entre arquitetura e estratégia
+                            organizacional — ideal para times modernos que adotam
+                            DDD com Agile.
+                        </p>
+                        <div class="book-footer">
+                            <span class="book-tag">Fundamentos</span>
+                            <a
+                                class="book-link"
+                                href="https://www.amazon.com/Learning-Domain-Driven-Design-Aligning-Architecture/dp/1098100131"
+                                target="_blank"
+                                rel="noopener"
+                            >
+                                <svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                                    />
+                                    <polyline points="15 3 21 3 21 9" />
+                                    <line x1="10" y1="14" x2="21" y2="3" />
+                                </svg>
+                                Amazon
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <blockquote class="section-quote">
+                    <p>"O coração do software é sua capacidade de resolver problemas de domínio para seus usuários."</p>
+                    <cite>— Eric Evans · <em>Domain-Driven Design</em></cite>
+                </blockquote>
+            </section>
+
+            <!-- ── 03 · SYSTEM DESIGN & DISTRIBUÍDOS ── -->
+            <section class="lib-section">
+                <div class="section-head">
+                    <span class="section-idx">III</span>
+                    <h2 class="section-label">System Design &amp; Distribuídos</h2>
+                    <span class="section-count">03 títulos</span>
+                </div>
+
+                <article class="book-card">
+                    <div class="book-cover">
+                        <div class="book-cover-inner">
+                            <img
+                                src="system-design-interview-v1.jpg"
+                                alt="Capa de System Design Interview Vol. 1"
+                                loading="lazy"
+                                decoding="async"
+                            />
+                            <span class="fallback"
+                                >System Design Interview · Vol. 1</span
+                            >
+                        </div>
+                    </div>
+                    <div class="book-body">
+                        <p class="book-num">Nº <b>06</b></p>
+                        <h3 class="book-title">
+                            System Design Interview — Vol. 1
+                        </h3>
+                        <p class="book-author">Alex Xu</p>
+                        <p class="book-desc">
+                            Guia prático de design de sistemas em larga escala.
+                            Cada capítulo decompõe um sistema real — URL
+                            shortener, feed de notícias, web crawler — ensinando a
+                            estruturar raciocínio sobre escalabilidade,
+                            consistência e disponibilidade em qualquer contexto de
+                            design.
+                        </p>
+                        <div class="book-footer">
+                            <span class="book-tag">Escalabilidade</span>
+                            <a
+                                class="book-link"
+                                href="https://www.amazon.com/System-Design-Interview-insiders-Second/dp/B08CMF2CQF"
+                                target="_blank"
+                                rel="noopener"
+                            >
+                                <svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                                    />
+                                    <polyline points="15 3 21 3 21 9" />
+                                    <line x1="10" y1="14" x2="21" y2="3" />
+                                </svg>
+                                Amazon
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="book-card">
+                    <div class="book-cover">
+                        <div class="book-cover-inner">
+                            <img
+                                src="system-design-interview-v2.jpg"
+                                alt="Capa de System Design Interview Vol. 2"
+                                loading="lazy"
+                                decoding="async"
+                            />
+                            <span class="fallback"
+                                >System Design Interview · Vol. 2</span
+                            >
+                        </div>
+                    </div>
+                    <div class="book-body">
+                        <p class="book-num">Nº <b>07</b></p>
+                        <h3 class="book-title">
+                            System Design Interview — Vol. 2
+                        </h3>
+                        <p class="book-author">Alex Xu &amp; Sahn Lam</p>
+                        <p class="book-desc">
+                            Continua onde o Vol. 1 parou com problemas mais
+                            complexos: nearby friends, Google Maps, distributed
+                            message queue e sistemas de pagamento. Aprofunda
+                            tópicos como consistent hashing, rate limiting e
+                            geo-distributed architectures com exemplos de
+                            produção.
+                        </p>
+                        <div class="book-footer">
+                            <span class="book-tag">Sistemas reais</span>
+                            <a
+                                class="book-link"
+                                href="https://www.amazon.com/System-Design-Interview-Insiders-Guide/dp/1736049119"
+                                target="_blank"
+                                rel="noopener"
+                            >
+                                <svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                                    />
+                                    <polyline points="15 3 21 3 21 9" />
+                                    <line x1="10" y1="14" x2="21" y2="3" />
+                                </svg>
+                                Amazon
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="book-card">
+                    <div class="book-cover">
+                        <div class="book-cover-inner">
+                            <img
+                                src="designing-data-intensive-applications.jpg"
+                                alt="Capa de Designing Data-Intensive Applications"
+                                loading="lazy"
+                                decoding="async"
+                            />
+                            <span class="fallback"
+                                >Designing Data-Intensive Applications</span
+                            >
+                        </div>
+                    </div>
+                    <div class="book-body">
+                        <p class="book-num">Nº <b>08</b></p>
+                        <h3 class="book-title">
+                            Designing Data-Intensive Applications
+                        </h3>
+                        <p class="book-author">Martin Kleppmann</p>
+                        <p class="book-desc">
+                            A referência definitiva sobre sistemas que vivem ou
+                            morrem pelos seus dados. Kleppmann disseca
+                            replicação, particionamento, transações, consistência
+                            distribuída e stream processing com profundidade
+                            técnica rara — leitura essencial para qualquer
+                            arquiteto de backend.
+                        </p>
+                        <div class="book-footer">
+                            <span class="book-tag">Consistência</span>
+                            <a
+                                class="book-link"
+                                href="https://www.amazon.com/Designing-Data-Intensive-Applications-Reliable-Maintainable/dp/1449373321"
+                                target="_blank"
+                                rel="noopener"
+                            >
+                                <svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                                    />
+                                    <polyline points="15 3 21 3 21 9" />
+                                    <line x1="10" y1="14" x2="21" y2="3" />
+                                </svg>
+                                Amazon
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <blockquote class="section-quote">
+                    <p>"Um sistema distribuído é aquele em que a falha de um computador que você nem sabia que existia pode tornar o seu próprio computador inutilizável."</p>
+                    <cite>— Leslie Lamport</cite>
+                </blockquote>
+            </section>
+
+            <!-- ── 04 · MICROSSERVIÇOS ── -->
+            <section class="lib-section">
+                <div class="section-head">
+                    <span class="section-idx">IV</span>
+                    <h2 class="section-label">Microsserviços</h2>
+                    <span class="section-count">02 títulos</span>
+                </div>
+
+                <article class="book-card">
+                    <div class="book-cover">
+                        <div class="book-cover-inner">
+                            <img
+                                src="building-microservices.jpg"
+                                alt="Capa de Criando Microsserviços"
+                                loading="lazy"
+                                decoding="async"
+                            />
+                            <span class="fallback">Criando Microsserviços</span>
+                        </div>
+                    </div>
+                    <div class="book-body">
+                        <p class="book-num">Nº <b>11</b></p>
+                        <h3 class="book-title">Criando Microsserviços</h3>
+                        <p class="book-author">Sam Newman</p>
+                        <p class="book-desc">
+                            O livro de referência para quem projeta ou avalia
+                            arquiteturas de microsserviços. Newman cobre coesão,
+                            comunicação síncrona vs. assíncrona, deploy
+                            independente, observabilidade e segurança — com
+                            exemplos realistas que evitam a armadilha do
+                            distributed monolith.
+                        </p>
+                        <div class="book-footer">
+                            <span class="book-tag">Design de serviços</span>
+                            <a
+                                class="book-link"
+                                href="https://www.amazon.com/Building-Microservices-Designing-Fine-Grained-Systems/dp/1492034029"
+                                target="_blank"
+                                rel="noopener"
+                            >
+                                <svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                                    />
+                                    <polyline points="15 3 21 3 21 9" />
+                                    <line x1="10" y1="14" x2="21" y2="3" />
+                                </svg>
+                                Amazon
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="book-card">
+                    <div class="book-cover">
+                        <div class="book-cover-inner">
+                            <img
+                                src="monolith-to-microservices.jpg"
+                                alt="Capa de Migrando Sistemas Monolíticos para Microsserviços"
+                                loading="lazy"
+                                decoding="async"
+                            />
+                            <span class="fallback"
+                                >Monolith to Microservices</span
+                            >
+                        </div>
+                    </div>
+                    <div class="book-body">
+                        <p class="book-num">Nº <b>12</b></p>
+                        <h3 class="book-title">
+                            Migrando Sistemas Monolíticos para Microsserviços
+                        </h3>
+                        <p class="book-author">Sam Newman</p>
+                        <p class="book-desc">
+                            Companion do livro anterior, focado exclusivamente na
+                            jornada de decomposição. Newman cataloga padrões
+                            evolucionários — Strangler Fig, Branch by Abstraction,
+                            Parallel Run — com análise de riscos e estratégias
+                            incrementais para equipes que não podem fazer big-bang
+                            rewrites.
+                        </p>
+                        <div class="book-footer">
+                            <span class="book-tag">Decomposição</span>
+                            <a
+                                class="book-link"
+                                href="https://www.amazon.com/Monolith-Microservices-Evolutionary-Patterns-Transform/dp/1492047848"
+                                target="_blank"
+                                rel="noopener"
+                            >
+                                <svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                                    />
+                                    <polyline points="15 3 21 3 21 9" />
+                                    <line x1="10" y1="14" x2="21" y2="3" />
+                                </svg>
+                                Amazon
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <blockquote class="section-quote">
+                    <p>"Microsserviços nos dão opções."</p>
+                    <cite>— Sam Newman · <em>Building Microservices</em></cite>
+                </blockquote>
+            </section>
+
+            <!-- ── 05 · FUNDAMENTOS DE ARQUITETURA ── -->
+            <section class="lib-section">
+                <div class="section-head">
+                    <span class="section-idx">V</span>
+                    <h2 class="section-label">Fundamentos de arquitetura</h2>
+                    <span class="section-count">02 títulos</span>
+                </div>
+
+                <article class="book-card">
+                    <div class="book-cover">
+                        <div class="book-cover-inner">
+                            <img
+                                src="fundamentals-of-software-architecture.jpg"
+                                alt="Capa de Fundamentos da Arquitetura de Software"
+                                loading="lazy"
+                                decoding="async"
+                            />
+                            <span class="fallback"
+                                >Fundamentos da Arquitetura de Software</span
+                            >
+                        </div>
+                    </div>
+                    <div class="book-body">
+                        <p class="book-num">Nº <b>13</b></p>
+                        <h3 class="book-title">
+                            Fundamentos da Arquitetura de Software
+                        </h3>
+                        <p class="book-author">Mark Richards &amp; Neal Ford</p>
+                        <p class="book-desc">
+                            Visão panorâmica e rigorosa das principais
+                            características arquiteturais — escalabilidade,
+                            elasticidade, disponibilidade, testabilidade — e dos
+                            estilos arquiteturais modernos. Trata explicitamente
+                            de trade-offs e da transição do papel de desenvolvedor
+                            para arquiteto.
+                        </p>
+                        <div class="book-footer">
+                            <span class="book-tag">Estilos</span>
+                            <a
+                                class="book-link"
+                                href="https://www.amazon.com/Fundamentals-Software-Architecture-Comprehensive-Characteristics/dp/1492043451"
+                                target="_blank"
+                                rel="noopener"
+                            >
+                                <svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                                    />
+                                    <polyline points="15 3 21 3 21 9" />
+                                    <line x1="10" y1="14" x2="21" y2="3" />
+                                </svg>
+                                Amazon
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="book-card">
+                    <div class="book-cover">
+                        <div class="book-cover-inner">
+                            <img
+                                src="software-architecture-the-hard-parts.jpg"
+                                alt="Capa de Arquitetura de Software: As Partes Difíceis"
+                                loading="lazy"
+                                decoding="async"
+                            />
+                            <span class="fallback"
+                                >Software Architecture: The Hard Parts</span
+                            >
+                        </div>
+                    </div>
+                    <div class="book-body">
+                        <p class="book-num">Nº <b>14</b></p>
+                        <h3 class="book-title">
+                            Arquitetura de Software: As Partes Difíceis
+                        </h3>
+                        <p class="book-author">
+                            Neal Ford, Mark Richards, Pramod Sadalage &amp; Zhamak
+                            Dehghani
+                        </p>
+                        <p class="book-desc">
+                            O livro que trata honestamente das decisões sem
+                            resposta certa. Decomposição de serviços,
+                            granularidade, gestão de dados distribuídos e sagas
+                            transacionais são analisados por meio de trade-off
+                            analysis sistemática — indispensável para times que
+                            vivem as consequências das suas próprias decisões de
+                            arquitetura.
+                        </p>
+                        <div class="book-footer">
+                            <span class="book-tag">Trade-offs</span>
+                            <a
+                                class="book-link"
+                                href="https://www.amazon.com/Software-Architecture-Trade-Off-Distributed-Architectures/dp/1492086894"
+                                target="_blank"
+                                rel="noopener"
+                            >
+                                <svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                                    />
+                                    <polyline points="15 3 21 3 21 9" />
+                                    <line x1="10" y1="14" x2="21" y2="3" />
+                                </svg>
+                                Amazon
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <blockquote class="section-quote">
+                    <p>"Em arquitetura de software não existem respostas certas ou erradas — apenas trade-offs."</p>
+                    <cite>— Neal Ford &amp; Mark Richards · <em>Fundamentals of Software Architecture</em></cite>
+                </blockquote>
+            </section>
+
+            <footer class="lib-footer">
+                <p class="mark">— fin —</p>
+                <blockquote class="lib-quote">
+                    <p>
+                        "Um arquiteto de software precisa ser um generalista
+                        que conhece o suficiente sobre cada área para tomar
+                        decisões inteligentes."
+                    </p>
+                    <cite>— Mark Richards &amp; Neal Ford,<br /><em>Fundamentals of Software Architecture</em></cite>
+                </blockquote>
+            </footer>
+        </div>
+
+        <script>
+            // Revelação escalonada no scroll + fallback de capa
+            (function () {
+                "use strict";
+
+                // Capa: marca .no-img se a imagem falhar ao carregar
+                document.querySelectorAll(".book-cover img").forEach(function (img) {
+                    var mark = function () {
+                        img.closest(".book-cover").classList.add("no-img");
+                    };
+                    if (img.complete && img.naturalWidth === 0) mark();
+                    img.addEventListener("error", mark);
+                });
+
+                var cards = document.querySelectorAll(".book-card");
+                var reduce = window.matchMedia(
+                    "(prefers-reduced-motion: reduce)"
+                ).matches;
+
+                if (reduce || !("IntersectionObserver" in window)) {
+                    cards.forEach(function (c) {
+                        c.classList.add("in");
+                    });
+                    return;
+                }
+
+                var io = new IntersectionObserver(
+                    function (entries) {
+                        entries.forEach(function (entry) {
+                            if (entry.isIntersecting) {
+                                var el = entry.target;
+                                // pequeno stagger por posição na seção
+                                var siblings = Array.prototype.indexOf.call(
+                                    el.parentNode.querySelectorAll(".book-card"),
+                                    el
+                                );
+                                el.style.transitionDelay =
+                                    Math.min(siblings, 3) * 80 + "ms";
+                                el.classList.add("in");
+                                io.unobserve(el);
+                            }
+                        });
+                    },
+                    { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+                );
+
+                cards.forEach(function (c) {
+                    io.observe(c);
+                });
+            })();
+        </script>
+    </body>
+</html>
