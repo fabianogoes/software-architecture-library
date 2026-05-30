@@ -546,6 +546,30 @@
             }
 
             /* ───────── Responsive ───────── */
+
+            /* Tablet / large phones */
+            @media (max-width: 640px) {
+                body {
+                    padding: clamp(1.5rem, 5vw, 2.5rem) 1.25rem 5rem;
+                }
+                .lib-stats {
+                    flex-wrap: wrap;
+                    justify-content: center;
+                }
+                .lib-stat {
+                    flex: 1 1 auto;
+                    text-align: center;
+                }
+                .section-label {
+                    font-size: clamp(1.1rem, 3.5vw, 1.65rem);
+                }
+                .book-footer {
+                    flex-wrap: wrap;
+                    gap: 0.6rem 1rem;
+                }
+            }
+
+            /* Medium mobile */
             @media (max-width: 560px) {
                 .book-card {
                     grid-template-columns: 90px 1fr;
@@ -556,13 +580,86 @@
                     width: 90px;
                 }
                 .book-title {
-                    font-size: 1.18rem;
+                    font-size: 1.15rem;
                 }
                 .book-desc {
-                    font-size: 0.92rem;
+                    font-size: 0.91rem;
+                    line-height: 1.58;
                 }
                 .lib-stat {
                     padding: 0.6rem 0.9rem;
+                }
+            }
+
+            /* Small mobile — iPhone SE, Galaxy A etc. */
+            @media (max-width: 400px) {
+                body {
+                    padding: 1.5rem 1rem 3.5rem;
+                }
+                .book-card {
+                    grid-template-columns: 76px 1fr;
+                    gap: 0.9rem;
+                    padding: 1rem 0.9rem;
+                }
+                .book-cover {
+                    width: 76px;
+                }
+                .book-num {
+                    font-size: 9.5px;
+                    margin-bottom: 0.35rem;
+                }
+                .book-title {
+                    font-size: 1rem;
+                    line-height: 1.22;
+                    margin-bottom: 0.2rem;
+                }
+                .book-author {
+                    font-size: 0.85rem;
+                    margin-bottom: 0.6rem;
+                }
+                .book-desc {
+                    font-size: 0.87rem;
+                    line-height: 1.55;
+                }
+                .book-tag {
+                    font-size: 9px;
+                    padding: 3px 8px;
+                }
+                .book-footer {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 0.5rem;
+                    margin-top: 0.9rem;
+                    padding-top: 0.7rem;
+                }
+                .book-link {
+                    min-height: 44px;
+                    display: inline-flex;
+                    align-items: center;
+                }
+                .lib-stat {
+                    padding: 0.55rem 0.75rem;
+                }
+                .lib-stat b {
+                    font-size: 1rem;
+                }
+                .lib-stat span {
+                    font-size: 8.5px;
+                }
+                .section-head {
+                    flex-wrap: wrap;
+                    row-gap: 0.2rem;
+                    margin-bottom: 1.5rem;
+                }
+                .section-count {
+                    flex-basis: 100%;
+                }
+                .section-quote {
+                    margin-top: 1.2rem;
+                    padding: 1rem 1.1rem;
+                }
+                .section-quote p {
+                    font-size: 0.91rem;
                 }
             }
 
@@ -1324,13 +1421,14 @@
             (function () {
                 "use strict";
 
-                // Capa: marca .no-img se a imagem falhar ao carregar
+                // Capa: marca .no-img se a imagem falhar ao carregar.
+                // Usamos apenas o evento "error" para evitar falso positivo com
+                // loading="lazy": o browser pode retornar complete=true + naturalWidth=0
+                // antes de buscar a imagem, marcando erroneamente a capa como ausente.
                 document.querySelectorAll(".book-cover img").forEach(function (img) {
-                    var mark = function () {
+                    img.addEventListener("error", function () {
                         img.closest(".book-cover").classList.add("no-img");
-                    };
-                    if (img.complete && img.naturalWidth === 0) mark();
-                    img.addEventListener("error", mark);
+                    });
                 });
 
                 var cards = document.querySelectorAll(".book-card");
